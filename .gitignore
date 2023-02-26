@@ -1,3 +1,5 @@
 node_modules/
 .prettierrc.json
 .prettierignore
+babel.config.js
+.eslintrc.json
