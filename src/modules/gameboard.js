@@ -10,12 +10,14 @@ const gameboard = () => {
   }
 
   function checkCoordinates(length, row, col, orientation) {
+    let newRow = row;
+    let newCol = col;
     if (orientation === "vertical") {
-      row += length - 1;
-      if (row < 0 || row > 9) return false;
+      newRow += length - 1;
+      if (newRow < 0 || newRow > 9) return false;
     } else if (orientation === "horizontal") {
-      col += length - 1;
-      if (col < 0 || col > 9) return false;
+      newCol += length - 1;
+      if (newCol < 0 || newCol > 9) return false;
     }
   }
 
@@ -23,15 +25,18 @@ const gameboard = () => {
     if (checkCoordinates(ship.length, row, col, orientation) === false)
       return false;
 
+    let newRow = row;
+    let newCol = col;
+
     if (orientation === "vertical") {
       for (let i = 0; i < ship.length; i++) {
-        board[row][col].shipObj = ship;
-        row += 1;
+        board[newRow][col].shipObj = ship;
+        newRow += 1;
       }
     } else if (orientation === "horizontal") {
       for (let i = 0; i < ship.length; i++) {
-        board[row][col].shipObj = ship;
-        col += 1;
+        board[row][newCol].shipObj = ship;
+        newCol += 1;
       }
     }
   }
