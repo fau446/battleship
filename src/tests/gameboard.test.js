@@ -6,13 +6,15 @@ import ship from "../modules/ship";
 test("Invalid placement of ship of Length 2 at [9, 9] horizontally", () => {
   const shipLengthTwo = ship(2);
   const gBoard = gameboard();
-  expect(gBoard.placeShip(shipLengthTwo, 9, 9, "horizontal")).toEqual(false);
+  gBoard.placeShip(shipLengthTwo, 9, 9, "horizontal");
+  expect(gBoard.board[9][9].shipObj).toEqual(null);
 });
 
 test("Invalid placement of ship of Length 4 at [5, 6] vertically", () => {
   const shipLengthFour = ship(4);
   const gBoard = gameboard();
-  expect(gBoard.placeShip(shipLengthFour, 7, 6, "vertical")).toEqual(false);
+  gBoard.placeShip(shipLengthFour, 7, 6, "vertical");
+  expect(gBoard.board[7][6].shipObj).toEqual(null);
 });
 
 test("Place ship of Length 2 at [0, 1] vetically", () => {
@@ -59,4 +61,31 @@ test("Receive attack on a ship that sinks", () => {
   gBoard.receiveAttack(0, 0);
   expect(gBoard.board[0][0].isHit).toEqual(true);
   expect(shipLengthOne.sunk).toEqual(true);
+});
+
+// checkAllShipsSunk tests
+test("No ships on the board should return false", () => {
+  const gBoard = gameboard();
+  expect(gBoard.checkAllShipsSunk()).toEqual(false);
+});
+
+test("One ship sunk and one ship not sunk should return false", () => {
+  const gBoard = gameboard();
+  const shipLengthOne = ship(1);
+  const shipLengthTwo = ship(2);
+  gBoard.placeShip(shipLengthOne, 3, 2, "horizontal");
+  gBoard.placeShip(shipLengthTwo, 6, 6, "vertical");
+  gBoard.receiveAttack(3, 2);
+  expect(gBoard.checkAllShipsSunk()).toEqual(false);
+});
+
+test("All ships are sunk", () => {
+  const gBoard = gameboard();
+  const shipOne = ship(1);
+  const shipTwo = ship(1);
+  gBoard.placeShip(shipOne, 2, 3, "vertical");
+  gBoard.placeShip(shipTwo, 6, 1, "vertical");
+  gBoard.receiveAttack(2, 3);
+  gBoard.receiveAttack(6, 1);
+  expect(gBoard.checkAllShipsSunk()).toEqual(true);
 });

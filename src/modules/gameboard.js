@@ -8,6 +8,7 @@ const gameboard = () => {
     }
     board.push(row);
   }
+  const ships = [];
 
   function checkCoordinates(length, row, col, orientation) {
     let newRow = row;
@@ -19,12 +20,12 @@ const gameboard = () => {
       newCol += length - 1;
       if (newCol < 0 || newCol > 9) return false;
     }
+    return true;
   }
 
   function placeShip(ship, row, col, orientation) {
-    if (checkCoordinates(ship.length, row, col, orientation) === false)
-      return false;
-
+    if (checkCoordinates(ship.length, row, col, orientation) === false) return;
+    // Need to check if there is another ship already on the squares
     let newRow = row;
     let newCol = col;
 
@@ -39,6 +40,7 @@ const gameboard = () => {
         newCol += 1;
       }
     }
+    ships.push(ship);
   }
 
   function receiveAttack(row, col) {
@@ -48,6 +50,15 @@ const gameboard = () => {
     board[row][col].isHit = true;
   }
 
+  function checkAllShipsSunk() {
+    if (ships.length === 0) return false;
+
+    for (let i = 0; i < ships.length; i++) {
+      if (ships[i].sunk === false) return false;
+    }
+    return true;
+  }
+
   return {
     get board() {
       // should probably be private.
@@ -55,6 +66,7 @@ const gameboard = () => {
     },
     placeShip,
     receiveAttack,
+    checkAllShipsSunk,
   };
 };
 
