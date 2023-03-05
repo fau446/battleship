@@ -36,12 +36,20 @@ const gameboard = () => {
     }
   }
 
+  function receiveAttack(row, col) {
+    if (board[row][col].shipObj != null) {
+      board[row][col].shipObj.hit();
+    }
+    board[row][col].isHit = true;
+  }
+
   return {
     get board() {
       // should probably be private.
       return board;
     },
     placeShip,
+    receiveAttack,
   };
 };
 
