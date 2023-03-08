@@ -36,6 +36,19 @@ test("Place ship of Length 4 at [4, 5] horizontally", () => {
   expect(gBoard.board[4][9].shipObj).toEqual(null);
 });
 
+test("Place a ship on coordinates that already have a ship", () => {
+  const shipLengthFour = ship(4);
+  const shipLengthTwo = ship(2);
+  const gBoard = gameboard();
+  gBoard.placeShip(shipLengthFour, 3, 2, "vertical");
+  gBoard.placeShip(shipLengthTwo, 2, 2, "vertical");
+  expect(gBoard.board[2][2].shipObj).toEqual(null);
+  expect(gBoard.board[3][2].shipObj).toEqual(shipLengthFour);
+  expect(gBoard.board[4][2].shipObj).toEqual(shipLengthFour);
+  expect(gBoard.board[5][2].shipObj).toEqual(shipLengthFour);
+  expect(gBoard.board[6][2].shipObj).toEqual(shipLengthFour);
+});
+
 // receiveAttack Tests
 
 test("Receive attack on an empty square", () => {

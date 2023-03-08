@@ -16,16 +16,25 @@ const gameboard = () => {
     if (orientation === "vertical") {
       newRow += length - 1;
       if (newRow < 0 || newRow > 9) return false;
+      newRow = row;
+      for (let i = 0; i < length; i++) {
+        if (board[newRow][col].shipObj != null) return false;
+        newRow += 1;
+      }
     } else if (orientation === "horizontal") {
       newCol += length - 1;
       if (newCol < 0 || newCol > 9) return false;
+      newCol = col;
+      for (let i = 0; i < length; i++) {
+        if (board[row][newCol].shipObj != null) return false;
+      }
     }
+
     return true;
   }
 
   function placeShip(ship, row, col, orientation) {
     if (checkCoordinates(ship.length, row, col, orientation) === false) return;
-    // Need to check if there is another ship already on the squares
     let newRow = row;
     let newCol = col;
 
