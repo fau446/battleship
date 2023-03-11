@@ -53,10 +53,15 @@ const gameboard = () => {
   }
 
   function receiveAttack(row, col) {
+    if (row > 9 || row < 0 || col > 9 || col < 0) return false;
+
+    if (board[row][col].isHit) return false;
+
     if (board[row][col].shipObj != null) {
       board[row][col].shipObj.hit();
     }
     board[row][col].isHit = true;
+    return true;
   }
 
   function checkAllShipsSunk() {
