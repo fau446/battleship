@@ -21,3 +21,11 @@ test("Attack a cell that has already been hit", () => {
   attacker.attack(2, 3, defender);
   expect(attacker.attack(2, 3, defender)).toEqual(false);
 });
+
+// randomAttack tests
+
+test("Random attack on a player", () => {
+  const computerPlayer = player();
+  const defender = player();
+  expect(computerPlayer.randomAttack(defender)).toEqual(true);
+});
