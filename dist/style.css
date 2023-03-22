@@ -40,6 +40,6 @@ h1 {
   height: 50px;
 }
 
-.enemy .row .cell {
+.enemy {
   cursor: pointer;
 }
