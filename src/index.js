@@ -1,1 +1,3 @@
-console.log("Hello");
+import screenController from "./screenController";
+
+screenController();
