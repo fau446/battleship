@@ -23,7 +23,7 @@ const player = () => {
   function randomAttack(enemy) {
     const randomIndex = [Math.floor(Math.random() * validEnemyCells.length)];
     const randomCell = validEnemyCells[randomIndex];
-    validEnemyCells.splice(randomIndex);
+    validEnemyCells.splice(randomIndex, 1);
     return attack(randomCell[0], randomCell[1], enemy);
   }
 
