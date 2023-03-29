@@ -43,3 +43,11 @@ h1 {
 .enemy {
   cursor: pointer;
 }
+
+.miss {
+  background: green;
+}
+
+.hit {
+  background: red;
+}
