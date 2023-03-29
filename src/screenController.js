@@ -33,6 +33,18 @@ const screenController = () => {
     }
   }
 
+  function unbindControls() {
+    enemyCells.forEach((cell) => {
+      cell.removeEventListener("click", attackCell);
+    });
+  }
+
+  function bindControls() {
+    enemyCells.forEach((cell) => {
+      cell.addEventListener("click", attackCell);
+    });
+  }
+
   function attackCell() {
     if (
       gameController.playTurn(
@@ -42,12 +54,16 @@ const screenController = () => {
     )
       return;
     renderBoard(gameController.computerPlayer);
-    renderBoard(gameController.humanPlayer);
+    unbindControls();
+    // display updates depending on hit or miss.
+    setTimeout(() => {
+      renderBoard(gameController.humanPlayer);
+      bindControls();
+      // display updates depending on hit or miss.
+    }, 2000);
   }
 
-  enemyCells.forEach((cell) => {
-    cell.addEventListener("click", attackCell);
-  });
+  bindControls();
 };
 
 export default screenController;
