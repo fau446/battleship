@@ -6,13 +6,19 @@
 
 body {
   display: grid;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 2fr 1fr 5fr;
 }
 
 h1 {
   justify-self: center;
   align-self: center;
   font-size: 3.5rem;
+}
+
+.display {
+  justify-self: center;
+  align-self: center;
+  font-size: 3rem;
 }
 
 .boards {
