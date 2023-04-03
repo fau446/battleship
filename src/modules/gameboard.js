@@ -57,11 +57,13 @@ const gameboard = () => {
 
     if (board[row][col].isHit) return false;
 
+    board[row][col].isHit = true;
+
     if (board[row][col].shipObj != null) {
       board[row][col].shipObj.hit();
+      return "hit";
     }
-    board[row][col].isHit = true;
-    return true;
+    return "miss";
   }
 
   function checkAllShipsSunk() {
