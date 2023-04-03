@@ -4,8 +4,6 @@ const player = () => {
   const gBoard = gameboard();
 
   function attack(row, col, enemy) {
-    // if (validAttack(row, col, enemy) === false) return false;
-    // return true;
     return enemy.gBoard.receiveAttack(row, col);
   }
 
@@ -26,6 +24,7 @@ const player = () => {
     validEnemyCells.splice(randomIndex, 1);
     return attack(randomCell[0], randomCell[1], enemy);
   }
+  //
 
   return {
     get gBoard() {
