@@ -8,17 +8,21 @@ const game = () => {
   // function setupGame, allows the human player to place ships and automatically places computer ships.
 
   function playTurn(row, col) {
-    if (humanPlayer.attack(row, col, computerPlayer) === false) return false;
-    computerPlayer.randomAttack(humanPlayer);
-    return true;
+    const humanAttackResult = humanPlayer.attack(row, col, computerPlayer);
+    if (humanAttackResult === false) return false;
+    if (gameOver()) return [humanAttackResult, null, "humanWin"];
+    const computerAttackResult = computerPlayer.randomAttack(humanPlayer);
+    if (gameOver())
+      return [humanAttackResult, computerAttackResult, "computerWin"];
+    return [humanAttackResult, computerAttackResult, false];
   }
 
   function gameOver() {
-    if (humanPlayer.gBoard.checkAllShipsSunk) {
-      return humanPlayer;
-    }
-    if (computerPlayer.gBoard.checkAllShipsSunk) {
-      return computerPlayer;
+    if (
+      humanPlayer.gBoard.checkAllShipsSunk ||
+      computerPlayer.gBoard.checkAllShipsSunk
+    ) {
+      return true;
     }
     return false;
   }
