@@ -5,6 +5,7 @@ const screenController = () => {
 
   // Cache DOM
   const enemyCells = document.querySelectorAll(".enemy");
+  const display = document.querySelector(".display");
 
   function emptyCellHit(cell) {
     cell.classList.add("miss");
@@ -45,21 +46,45 @@ const screenController = () => {
     });
   }
 
+  function updateDisplay(player, result) {
+    if (result === "humanWin")
+      display.innerText = "All your opponent's ships have been sunk! You win!";
+    else if (result === "computerWin")
+      display.innerText = "All your ship's have been sunk! You lose!";
+
+    if (player === gameController.humanPlayer) {
+      if (result === "miss") display.innerText = "You missed!";
+      else if (result === "hit") display.innerText = "You hit a ship!";
+    } else if (player === gameController.computerPlayer) {
+      if (result === "miss") display.innerText = "Your opponent missed!";
+      else if (result === "hit")
+        display.innerText = "Your opponent hit a ship!";
+    }
+  }
+
   function attackCell() {
-    if (
-      gameController.playTurn(
-        this.parentElement.dataset.row,
-        this.dataset.col
-      ) === false
-    )
-      return;
+    const playTurnResult = gameController.playTurn(
+      this.parentElement.dataset.row,
+      this.dataset.col
+    );
+    if (playTurnResult === false) return;
     renderBoard(gameController.computerPlayer);
     unbindControls();
-    // display updates depending on hit or miss.
+    if (playTurnResult[2] === "humanWin") {
+      updateDisplay(gameController.humanPlayer, playTurnResult[2]);
+      return;
+    }
+    updateDisplay(gameController.humanPlayer, playTurnResult[0]);
+
+    // set a delay before the computer's action is displayed.
     setTimeout(() => {
       renderBoard(gameController.humanPlayer);
+      if (playTurnResult[2] === "computerWin") {
+        updateDisplay(gameController.computerPlayer, playTurnResult[2]);
+        return;
+      }
       bindControls();
-      // display updates depending on hit or miss.
+      updateDisplay(gameController.computerPlayer, playTurnResult[1]);
     }, 2000);
   }
 
