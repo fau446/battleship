@@ -34,7 +34,8 @@ const gameboard = () => {
   }
 
   function placeShip(ship, row, col, orientation) {
-    if (checkCoordinates(ship.length, row, col, orientation) === false) return;
+    if (checkCoordinates(ship.length, row, col, orientation) === false)
+      return false;
     let newRow = row;
     let newCol = col;
 
@@ -50,6 +51,7 @@ const gameboard = () => {
       }
     }
     ships.push(ship);
+    return true;
   }
 
   function receiveAttack(row, col) {

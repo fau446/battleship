@@ -1,4 +1,5 @@
 import player from "./modules/player";
+import ship from "./modules/ship";
 
 const game = () => {
   // setup human and computer players
@@ -6,6 +7,30 @@ const game = () => {
   const computerPlayer = player();
 
   // function setupGame, allows the human player to place ships and automatically places computer ships.
+
+  function placeComputerShips() {
+    const carrier = ship(5);
+    const battleship = ship(4);
+    const destroyer = ship(3);
+    const submarine = ship(3);
+    const patrolBoat = ship(2);
+    const boats = [carrier, battleship, destroyer, submarine, patrolBoat];
+    const orientation = ["horizontal", "vertical"];
+
+    for (let i = 0; i < boats.length; i++) {
+      const boat = boats[i];
+      const randomIndex = Math.floor(Math.random() * 2);
+      if (
+        computerPlayer.gBoard.placeShip(
+          boat,
+          Math.floor(Math.random() * 10),
+          Math.floor(Math.random() * 10),
+          orientation[randomIndex]
+        ) === false
+      )
+        i--;
+    }
+  }
 
   function playTurn(row, col) {
     const humanAttackResult = humanPlayer.attack(row, col, computerPlayer);
@@ -38,6 +63,8 @@ const game = () => {
     if not, loop back to step 2.
     if over, display a message and stop player from clicking on board.
   */
+
+  placeComputerShips();
 
   return {
     get humanPlayer() {
