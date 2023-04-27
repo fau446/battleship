@@ -46,6 +46,7 @@ const screenController = () => {
     });
   }
 
+  // add a message when a ship is sunk
   function updateDisplay(player, result) {
     if (result === "humanWin")
       display.innerText = "All your opponent's ships have been sunk! You win!";
@@ -55,10 +56,13 @@ const screenController = () => {
     if (player === gameController.humanPlayer) {
       if (result === "miss") display.innerText = "You missed!";
       else if (result === "hit") display.innerText = "You hit a ship!";
+      else if (result === "sink") display.innerText = "You sunk a ship!";
     } else if (player === gameController.computerPlayer) {
       if (result === "miss") display.innerText = "Your opponent missed!";
       else if (result === "hit")
         display.innerText = "Your opponent hit a ship!";
+      else if (result === "sink")
+        display.innerText = "Your opponent sunk a ship!";
     }
   }
 

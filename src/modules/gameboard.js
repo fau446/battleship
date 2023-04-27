@@ -63,6 +63,7 @@ const gameboard = () => {
 
     if (board[row][col].shipObj != null) {
       board[row][col].shipObj.hit();
+      if (board[row][col].shipObj.sunk) return "sink";
       return "hit";
     }
     return "miss";
