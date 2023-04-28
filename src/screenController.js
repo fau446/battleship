@@ -15,6 +15,10 @@ const screenController = () => {
     cell.classList.add("hit");
   }
 
+  function playerShipCell(cell) {
+    cell.classList.add("player-ship");
+  }
+
   function renderBoard(player) {
     let boardNumber = 0;
     if (player === gameController.computerPlayer) boardNumber = 1;
@@ -22,11 +26,19 @@ const screenController = () => {
     const boards = document.querySelectorAll(".board");
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
+        // if boardNumber === 0, set player ships to blue
+        if (boardNumber === 0 && player.gBoard.board[i][j].shipObj != null) {
+          playerShipCell(boards[`${boardNumber}`].children[i].children[j]);
+        }
+
         if (
           player.gBoard.board[i][j].isHit === true &&
           player.gBoard.board[i][j].shipObj != null
         ) {
           occupiedCellHit(boards[`${boardNumber}`].children[i].children[j]);
+          boards[`${boardNumber}`].children[i].children[j].classList.remove(
+            "player-ship"
+          );
         } else if (player.gBoard.board[i][j].isHit === true) {
           emptyCellHit(boards[`${boardNumber}`].children[i].children[j]);
         }
