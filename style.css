@@ -57,3 +57,7 @@ h1 {
 .hit {
   background: red;
 }
+
+.player-ship {
+  background: lightblue;
+}
