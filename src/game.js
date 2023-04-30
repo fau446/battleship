@@ -11,11 +11,21 @@ const game = () => {
   const submarine = ship(3);
   const patrolBoat = ship(2);
   const playerShips = [carrier, battleship, destroyer, submarine, patrolBoat];
+  let placementOrientation = "horizontal";
 
-  function placeShip(row, col, orientation) {
+  function changePlacementOrientation() {
+    placementOrientation =
+      placementOrientation === "horizontal" ? "vertical" : "horizontal";
+  }
+
+  function placeShip(row, col) {
     if (
-      humanPlayer.gBoard.placeShip(playerShips[0], row, col, orientation) ===
-      false
+      humanPlayer.gBoard.placeShip(
+        playerShips[0],
+        row,
+        col,
+        placementOrientation
+      ) === false
     )
       return false;
 
@@ -56,34 +66,22 @@ const game = () => {
   function playTurn(row, col) {
     const humanAttackResult = humanPlayer.attack(row, col, computerPlayer);
     if (humanAttackResult === false) return false;
-    // if (gameOver()) return [humanAttackResult, null, "humanWin"];
+    if (gameOver()) return [humanAttackResult, null, "humanWin"];
     const computerAttackResult = computerPlayer.randomAttack(humanPlayer);
-    // if (gameOver())
-    // return [humanAttackResult, computerAttackResult, "computerWin"];
+    if (gameOver())
+      return [humanAttackResult, computerAttackResult, "computerWin"];
     return [humanAttackResult, computerAttackResult, false];
   }
 
   function gameOver() {
     if (
-      humanPlayer.gBoard.checkAllShipsSunk ||
-      computerPlayer.gBoard.checkAllShipsSunk
+      humanPlayer.gBoard.checkAllShipsSunk() ||
+      computerPlayer.gBoard.checkAllShipsSunk()
     ) {
       return true;
     }
     return false;
   }
-
-  /*
-  1. Click on start game.
-  2. Human player goes first, clicks on a cell on the enemy board to attack.
-    screenController calls a function in game module to attack.
-  3. Checks if it's a hit, updates the computer player's board UI through screenController.
-  4. Computer Player attacks.
-  5. Update Human Player board UI.
-  6. Checks if the game is over
-    if not, loop back to step 2.
-    if over, display a message and stop player from clicking on board.
-  */
 
   placeComputerShips();
 
@@ -97,6 +95,7 @@ const game = () => {
     get playerShips() {
       return playerShips;
     },
+    changePlacementOrientation,
     playTurn,
     gameOver,
     placeShip,

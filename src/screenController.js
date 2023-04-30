@@ -14,6 +14,12 @@ const screenController = () => {
   const friendlyCells = document.querySelectorAll(".friendly");
   const enemyCells = document.querySelectorAll(".enemy");
   const display = document.querySelector(".display");
+  const rotateButton = document.querySelector(".rotate");
+  rotateButton.addEventListener("click", changePlacementOrientation);
+
+  function changePlacementOrientation() {
+    gameController.changePlacementOrientation();
+  }
 
   function emptyCellHit(cell) {
     cell.classList.add("miss");
@@ -100,8 +106,8 @@ const screenController = () => {
 
   function attackCell() {
     const playTurnResult = gameController.playTurn(
-      this.parentElement.dataset.row,
-      this.dataset.col
+      Number(this.parentElement.dataset.row),
+      Number(this.dataset.col)
     );
     if (playTurnResult === false) return;
     renderBoard(gameController.computerPlayer);
@@ -121,7 +127,7 @@ const screenController = () => {
       }
       bindControls();
       updateDisplay(gameController.computerPlayer, playTurnResult[1]);
-    }, 2000);
+    }, 1000);
   }
 
   function placePlayerShip() {
@@ -131,9 +137,7 @@ const screenController = () => {
     // enemy board hidden by default. Rotate shown by default.
     // If false, update display
     // gameboard checkCoordinates function is flawed.
-    if (
-      gameController.placeShip(Number(row), Number(col), "horizontal") === false
-    ) {
+    if (gameController.placeShip(Number(row), Number(col)) === false) {
       display.innerText = "Invalid placement, please try again!";
       return;
     }
