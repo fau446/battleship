@@ -1,6 +1,7 @@
-const ship = (length) => {
+const ship = (length, shipName = null) => {
   let timesHit = 0;
   let sunk = false;
+  const name = shipName;
 
   function isSunk() {
     if (length <= timesHit) {
@@ -22,6 +23,9 @@ const ship = (length) => {
     },
     get sunk() {
       return sunk;
+    },
+    get name() {
+      return name;
     },
     hit,
   };
