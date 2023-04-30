@@ -5,20 +5,41 @@ const game = () => {
   // setup human and computer players
   const humanPlayer = player();
   const computerPlayer = player();
+  const carrier = ship(5);
+  const battleship = ship(4);
+  const destroyer = ship(3);
+  const submarine = ship(3);
+  const patrolBoat = ship(2);
+  const playerShips = [carrier, battleship, destroyer, submarine, patrolBoat];
 
-  // function setupGame, allows the human player to place ships and automatically places computer ships.
+  function placeShip(row, col, orientation) {
+    if (
+      humanPlayer.gBoard.placeShip(playerShips[0], row, col, orientation) ===
+      false
+    )
+      return false;
+
+    playerShips.shift();
+    return true;
+  }
 
   function placeComputerShips() {
-    const carrier = ship(5);
-    const battleship = ship(4);
-    const destroyer = ship(3);
-    const submarine = ship(3);
-    const patrolBoat = ship(2);
-    const boats = [carrier, battleship, destroyer, submarine, patrolBoat];
+    const computerCarrier = ship(5);
+    const computerBattleship = ship(4);
+    const computerDestroyer = ship(3);
+    const computerSubmarine = ship(3);
+    const computerPatrolBoat = ship(2);
+    const computerBoats = [
+      computerCarrier,
+      computerBattleship,
+      computerDestroyer,
+      computerSubmarine,
+      computerPatrolBoat,
+    ];
     const orientation = ["horizontal", "vertical"];
 
-    for (let i = 0; i < boats.length; i++) {
-      const boat = boats[i];
+    for (let i = 0; i < computerBoats.length; i++) {
+      const boat = computerBoats[i];
       const randomIndex = Math.floor(Math.random() * 2);
       if (
         computerPlayer.gBoard.placeShip(
@@ -35,10 +56,10 @@ const game = () => {
   function playTurn(row, col) {
     const humanAttackResult = humanPlayer.attack(row, col, computerPlayer);
     if (humanAttackResult === false) return false;
-    if (gameOver()) return [humanAttackResult, null, "humanWin"];
+    // if (gameOver()) return [humanAttackResult, null, "humanWin"];
     const computerAttackResult = computerPlayer.randomAttack(humanPlayer);
-    if (gameOver())
-      return [humanAttackResult, computerAttackResult, "computerWin"];
+    // if (gameOver())
+    // return [humanAttackResult, computerAttackResult, "computerWin"];
     return [humanAttackResult, computerAttackResult, false];
   }
 
@@ -73,8 +94,12 @@ const game = () => {
     get computerPlayer() {
       return computerPlayer;
     },
+    get playerShips() {
+      return playerShips;
+    },
     playTurn,
     gameOver,
+    placeShip,
   };
 };
 

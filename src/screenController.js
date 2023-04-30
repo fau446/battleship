@@ -3,7 +3,15 @@ import game from "./game";
 const screenController = () => {
   const gameController = game();
 
+  /*
+  const thing = document.querySelector(".thing");
+  const toggle = document.querySelector(".toggle");
+  toggle.addEventListener("click", () => {
+    thing.classList.toggle("test");
+  }); */
+
   // Cache DOM
+  const friendlyCells = document.querySelectorAll(".friendly");
   const enemyCells = document.querySelectorAll(".enemy");
   const display = document.querySelector(".display");
 
@@ -44,6 +52,18 @@ const screenController = () => {
         }
       }
     }
+  }
+
+  function bindPlaceShipControls() {
+    friendlyCells.forEach((cell) => {
+      cell.addEventListener("click", placePlayerShip);
+    });
+  }
+
+  function unbindPlaceShipControls() {
+    friendlyCells.forEach((cell) => {
+      cell.removeEventListener("click", placePlayerShip);
+    });
   }
 
   function unbindControls() {
@@ -104,7 +124,48 @@ const screenController = () => {
     }, 2000);
   }
 
+  function placePlayerShip() {
+    const { row } = this.parentElement.dataset;
+    const { col } = this.dataset;
+
+    // enemy board hidden by default. Rotate shown by default.
+    // If false, update display
+    // gameboard checkCoordinates function is flawed.
+    if (
+      gameController.placeShip(Number(row), Number(col), "horizontal") === false
+    ) {
+      display.innerText = "Invalid placement, please try again!";
+      return;
+    }
+    const shipsArray = gameController.playerShips;
+
+    display.innerText = "Good";
+
+    // If true, update display
+    if (shipsArray.length === 0) {
+      unbindPlaceShipControls();
+      // display enemy board.
+    }
+
+    renderBoard(gameController.humanPlayer);
+  }
+
+  /* placing player ships
+  Allow the player to choose random placement if desired.
+
+  Create ships and put them into array.
+  Placing ships:
+    1. Display tells player to place the ship (name and length).
+      If invalid placement, update display, ship is not placed.
+    2. Once ship has been placed, renderBoard.
+
+  Unhide enemy board and hide rotate button.
+
+  Start the game once all player ships have been placed.
+  */
+
   bindControls();
+  bindPlaceShipControls();
 };
 
 export default screenController;
