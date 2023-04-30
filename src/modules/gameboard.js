@@ -27,6 +27,7 @@ const gameboard = () => {
       newCol = col;
       for (let i = 0; i < length; i++) {
         if (board[row][newCol].shipObj != null) return false;
+        newCol += 1;
       }
     }
 
