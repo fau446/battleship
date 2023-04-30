@@ -21,9 +21,17 @@ h1 {
   font-size: 3rem;
 }
 
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .boards {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  gap: 20px;
 }
 
 .board {
@@ -31,7 +39,7 @@ h1 {
   border: 2px solid black;
   width: 500px;
   height: 500px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -50,6 +58,10 @@ h1 {
   cursor: pointer;
 }
 
+.rotate {
+  width: 250px;
+}
+
 .miss {
   background: green;
 }
@@ -60,4 +72,8 @@ h1 {
 
 .player-ship {
   background: lightblue;
+}
+
+.hide {
+  display: none;
 }
