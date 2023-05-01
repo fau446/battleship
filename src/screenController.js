@@ -141,35 +141,24 @@ const screenController = () => {
       display.innerText = "Invalid placement, please try again!";
       return;
     }
-    const shipsArray = gameController.playerShips;
 
-    display.innerText = "Good";
+    renderBoard(gameController.humanPlayer);
+
+    const shipsArray = gameController.playerShips;
 
     // If true, update display
     if (shipsArray.length === 0) {
       unbindPlaceShipControls();
-      // display enemy board.
+      display.innerText = "Click on an enemy tile to attack!";
+      return;
     }
 
-    renderBoard(gameController.humanPlayer);
+    display.innerText = `Click on a tile to place your ${shipsArray[0].name}.`;
   }
-
-  /* placing player ships
-  Allow the player to choose random placement if desired.
-
-  Create ships and put them into array.
-  Placing ships:
-    1. Display tells player to place the ship (name and length).
-      If invalid placement, update display, ship is not placed.
-    2. Once ship has been placed, renderBoard.
-
-  Unhide enemy board and hide rotate button.
-
-  Start the game once all player ships have been placed.
-  */
 
   bindControls();
   bindPlaceShipControls();
+  display.innerText = `Click on a tile to place your ${gameController.playerShips[0].name}.`;
 };
 
 export default screenController;

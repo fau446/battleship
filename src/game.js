@@ -5,11 +5,11 @@ const game = () => {
   // setup human and computer players
   const humanPlayer = player();
   const computerPlayer = player();
-  const carrier = ship(5);
-  const battleship = ship(4);
-  const destroyer = ship(3);
-  const submarine = ship(3);
-  const patrolBoat = ship(2);
+  const carrier = ship(5, "Carrier");
+  const battleship = ship(4, "Battleship");
+  const destroyer = ship(3, "Destroyer");
+  const submarine = ship(3, "Submarine");
+  const patrolBoat = ship(2, "Patrol Boat");
   const playerShips = [carrier, battleship, destroyer, submarine, patrolBoat];
   let placementOrientation = "horizontal";
 
@@ -34,11 +34,11 @@ const game = () => {
   }
 
   function placeComputerShips() {
-    const computerCarrier = ship(5);
-    const computerBattleship = ship(4);
-    const computerDestroyer = ship(3);
-    const computerSubmarine = ship(3);
-    const computerPatrolBoat = ship(2);
+    const computerCarrier = ship(5, "Carrier");
+    const computerBattleship = ship(4, "Battleship");
+    const computerDestroyer = ship(3, "Destroyer");
+    const computerSubmarine = ship(3, "Submarine");
+    const computerPatrolBoat = ship(2, "Patrol Boat");
     const computerBoats = [
       computerCarrier,
       computerBattleship,
