@@ -11,6 +11,7 @@ const screenController = () => {
   }); */
 
   // Cache DOM
+  const boards = document.querySelectorAll(".board");
   const friendlyCells = document.querySelectorAll(".friendly");
   const enemyCells = document.querySelectorAll(".enemy");
   const display = document.querySelector(".display");
@@ -37,7 +38,6 @@ const screenController = () => {
     let boardNumber = 0;
     if (player === gameController.computerPlayer) boardNumber = 1;
 
-    const boards = document.querySelectorAll(".board");
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         // if boardNumber === 0, set player ships to blue
@@ -150,6 +150,8 @@ const screenController = () => {
     if (shipsArray.length === 0) {
       unbindPlaceShipControls();
       display.innerText = "Click on an enemy tile to attack!";
+      rotateButton.classList.add("hide");
+      boards[1].classList.toggle("hide");
       return;
     }
 
