@@ -81,9 +81,9 @@ const gameboard = () => {
 
   return {
     get board() {
-      // should probably be private.
       return board;
     },
+    checkCoordinates,
     placeShip,
     receiveAttack,
     checkAllShipsSunk,

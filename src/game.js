@@ -95,6 +95,9 @@ const game = () => {
     get playerShips() {
       return playerShips;
     },
+    get placementOrientation() {
+      return placementOrientation;
+    },
     changePlacementOrientation,
     playTurn,
     gameOver,

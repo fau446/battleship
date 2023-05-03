@@ -3,13 +3,6 @@ import game from "./game";
 const screenController = () => {
   const gameController = game();
 
-  /*
-  const thing = document.querySelector(".thing");
-  const toggle = document.querySelector(".toggle");
-  toggle.addEventListener("click", () => {
-    thing.classList.toggle("test");
-  }); */
-
   // Cache DOM
   const boards = document.querySelectorAll(".board");
   const friendlyCells = document.querySelectorAll(".friendly");
@@ -17,6 +10,71 @@ const screenController = () => {
   const display = document.querySelector(".display");
   const rotateButton = document.querySelector(".rotate");
   rotateButton.addEventListener("click", changePlacementOrientation);
+
+  friendlyCells.forEach((cell) => {
+    cell.addEventListener("mouseover", mouseoverGhostShip);
+  });
+  friendlyCells.forEach((cell) => {
+    cell.addEventListener("mouseout", mouseoutGhostShip);
+  });
+
+  function mouseoverGhostShip() {
+    let row = Number(this.parentElement.dataset.row);
+    let col = Number(this.dataset.col);
+    const shipLength = gameController.playerShips[0].length;
+    const orientation = gameController.placementOrientation;
+
+    if (
+      gameController.humanPlayer.gBoard.checkCoordinates(
+        shipLength,
+        row,
+        col,
+        orientation
+      ) === false
+    )
+      return;
+
+    if (orientation === "horizontal") {
+      for (let i = 0; i < shipLength; i++) {
+        boards[0].children[row].children[col].classList.add("hover");
+        col++;
+      }
+    } else if (orientation === "vertical") {
+      for (let i = 0; i < shipLength; i++) {
+        boards[0].children[row].children[col].classList.add("hover");
+        row++;
+      }
+    }
+  }
+
+  function mouseoutGhostShip() {
+    let row = Number(this.parentElement.dataset.row);
+    let col = Number(this.dataset.col);
+    const shipLength = gameController.playerShips[0].length;
+    const orientation = gameController.placementOrientation;
+
+    if (
+      gameController.humanPlayer.gBoard.checkCoordinates(
+        shipLength,
+        row,
+        col,
+        orientation
+      ) === false
+    )
+      return;
+
+    if (orientation === "horizontal") {
+      for (let i = 0; i < shipLength; i++) {
+        boards[0].children[row].children[col].classList.remove("hover");
+        col++;
+      }
+    } else if (orientation === "vertical") {
+      for (let i = 0; i < shipLength; i++) {
+        boards[0].children[row].children[col].classList.remove("hover");
+        row++;
+      }
+    }
+  }
 
   function changePlacementOrientation() {
     gameController.changePlacementOrientation();
@@ -69,6 +127,8 @@ const screenController = () => {
   function unbindPlaceShipControls() {
     friendlyCells.forEach((cell) => {
       cell.removeEventListener("click", placePlayerShip);
+      cell.removeEventListener("mouseover", mouseoverGhostShip);
+      cell.removeEventListener("mouseout", mouseoutGhostShip);
     });
   }
 
@@ -84,7 +144,6 @@ const screenController = () => {
     });
   }
 
-  // add a message when a ship is sunk
   function updateDisplay(player, result) {
     if (result === "humanWin")
       display.innerText = "All your opponent's ships have been sunk! You win!";
@@ -134,9 +193,6 @@ const screenController = () => {
     const { row } = this.parentElement.dataset;
     const { col } = this.dataset;
 
-    // enemy board hidden by default. Rotate shown by default.
-    // If false, update display
-    // gameboard checkCoordinates function is flawed.
     if (gameController.placeShip(Number(row), Number(col)) === false) {
       display.innerText = "Invalid placement, please try again!";
       return;
