@@ -7,18 +7,24 @@
 body {
   display: grid;
   grid-template-rows: 2fr 1fr 5fr;
+  background-color: rgb(50, 49, 49);
 }
 
 h1 {
   justify-self: center;
   align-self: center;
   font-size: 3.5rem;
+  font-family: "Orbitron", sans-serif;
+  color: white;
 }
 
 .display {
+  font-family: "Orbitron", sans-serif;
   justify-self: center;
   align-self: center;
   font-size: 3rem;
+  color: rgb(65, 176, 1);
+  text-align: center;
 }
 
 .game-area {
@@ -48,7 +54,7 @@ h1 {
 }
 
 .cell {
-  border: 1px solid black;
+  border: 1px solid white;
   width: 50px;
   height: 50px;
 }
@@ -58,23 +64,31 @@ h1 {
 }
 
 .rotate {
-  width: 250px;
+  margin-bottom: 50px;
+  border: none;
+  background-color: rgb(50, 49, 49);
+  cursor: pointer;
+}
+
+.rotate img {
+  width: 80px;
+  height: 80px;
 }
 
 .hover {
-  background: yellow;
+  background-color: yellow;
 }
 
 .miss {
-  background: green;
+  background-color: green;
 }
 
 .hit {
-  background: red;
+  background-color: red;
 }
 
 .player-ship {
-  background: lightblue;
+  background-color: lightblue;
 }
 
 .hide {
